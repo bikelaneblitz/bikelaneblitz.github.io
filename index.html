@@ -34,6 +34,17 @@ $('#file').on('change', function(e){
       console.log(results);
       $('#address').text(results[0].formatted_address)
       $('#time').text(modifyDate(exif.tags.ModifyDate));
+      
+      var API_URL = 'https://api.cityofnewyork.us/geoclient/v1/address.json';
+      $.ajax(API_URL,{
+        data: { houseNumber : results[0].address_components[0].long_name,
+               street : results[0].address_components[1].long_name,
+               zip: results[0].address_components[8].long_name,
+               app_id: '9531fd3e',
+               app_key: 'cd92412bac1c876fdafafe3b876a1228'
+              }
+      }
+        ).done(function(data){console.log(data)})
     });
   });
   reader.readAsArrayBuffer(e.target.files[0]);
