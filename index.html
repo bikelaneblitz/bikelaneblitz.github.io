@@ -1,1 +1,48 @@
-hello bike lane
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-3.0.0.js"><\/script>
+  <script src="https://rawgit.com/bwindels/exif-parser-browser-bundles/master/exif-parser-0.1.9.js"><\/script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDR7hQSxEDfJkNqynk8pr1sDRm0CNA0_1o"><\/script>
+<script src="http://stevenlevithan.com/assets/misc/date.format.js"><\/script>
+<script>
+var $ = jQuery;
+$('#file').on('change', function(e){
+  console.log(e.target.files[0]);
+  var reader = new FileReader();
+  reader.onload = (function(e) {
+    var arrBuff = e.target.result;
+    var exif = ExifParser.create(arrBuff).parse();
+      var latlng = {lat: exif.tags.GPSLatitude, lng: exif.tags.GPSLongitude};
+    geocoder.geocode({'location': latlng}, function(results, status) {
+      console.log(status);
+      console.log(results);
+      $('#address').text(results[0].formatted_address)
+      $('#time').text(modifyDate(exif.tags.ModifyDate));
+    });
+  });
+  reader.readAsArrayBuffer(e.target.files[0]);
+});
+
+var geocoder = new google.maps.Geocoder;
+
+var modifyDate = function(dateAsStr){
+  var [ imgDate, imgTime] = dateAsStr.split(" ")
+  var [ imgYear, imgMonth, imgDay ] = imgDate.split(":");
+  var [ imgHour, imgMinute, imgSecond ] = imgTime.split(":");
+  return dateFormat(new Date(imgYear, imgMonth - 1, imgDay, imgHour, imgMinute, imgSecond), "mm/dd/yyyy hh:mm:ss TT" )
+}
+</script>
+
+  <div>select a jpg file, street address and time taken will be displayed</div>
+  
+  <input type="file" id="file"/>
+  <div id="address"></div>
+  <div id="time"></div>
+</body>
+</html>
