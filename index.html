@@ -10,7 +10,14 @@
   <script src="https://rawgit.com/bwindels/exif-parser-browser-bundles/master/exif-parser-0.1.9.js"><\/script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDR7hQSxEDfJkNqynk8pr1sDRm0CNA0_1o"><\/script>
 <script src="http://stevenlevithan.com/assets/misc/date.format.js"><\/script>
-<script>
+
+
+  <div>select a jpg file, street address and time taken will be displayed</div>
+  
+  <input type="file" id="file"/>
+  <div id="address"></div>
+  <div id="time"></div>
+  <script>
 var $ = jQuery;
 $('#file').on('change', function(e){
   console.log(e.target.files[0]);
@@ -38,11 +45,5 @@ var modifyDate = function(dateAsStr){
   return dateFormat(new Date(imgYear, imgMonth - 1, imgDay, imgHour, imgMinute, imgSecond), "mm/dd/yyyy hh:mm:ss TT" )
 }
 </script>
-
-  <div>select a jpg file, street address and time taken will be displayed</div>
-  
-  <input type="file" id="file"/>
-  <div id="address"></div>
-  <div id="time"></div>
 </body>
 </html>
