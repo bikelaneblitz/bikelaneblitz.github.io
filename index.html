@@ -17,6 +17,7 @@
   <input type="file" id="file"/>
   <div id="address"></div>
   <div id="time"></div>
+  <div id="precinct"></div>
   <div>
     <a href="https://twitter.com/bikelaneblitz">https://twitter.com/bikelaneblitz</a>
   </div>
@@ -45,7 +46,10 @@ $('#file').on('change', function(e){
                app_key: 'cd92412bac1c876fdafafe3b876a1228'
               }
       }
-        ).done(function(data){console.log(data)})
+        ).done(function(data){
+          console.log(data);
+          $('#precinct').text('@NYPD' + Number(data.address.policePrecinct) + 'Pct');
+        })
     });
   });
   reader.readAsArrayBuffer(e.target.files[0]);
