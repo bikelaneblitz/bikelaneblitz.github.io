@@ -37,6 +37,7 @@ $('#file').on('change', function(e){
       
       var API_URL = 'https://api.cityofnewyork.us/geoclient/v1/address.json';
       $.ajax(API_URL,{
+        dataType:'jsonp',
         data: { houseNumber : results[0].address_components[0].long_name,
                street : results[0].address_components[1].long_name,
                zip: results[0].address_components[8].long_name,
