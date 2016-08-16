@@ -29,28 +29,37 @@ $('#file').on('change', function(e){
   reader.onload = (function(e) {
     var arrBuff = e.target.result;
     var exif = ExifParser.create(arrBuff).parse();
-      var latlng = {lat: exif.tags.GPSLatitude, lng: exif.tags.GPSLongitude};
-    geocoder.geocode({'location': latlng}, function(results, status) {
-      console.log(status);
-      console.log(results);
-      $('#address').text(results[0].formatted_address)
+    if(exif.tags.ModifyDate){
       $('#time').text(modifyDate(exif.tags.ModifyDate));
+    }
+    if( exif.tags.GPSLatitude && lng: exif.tags.GPSLongitude){
+      var latlng = {lat: exif.tags.GPSLatitude, lng: exif.tags.GPSLongitude};
+      geocoder.geocode({'location': latlng}, function(results, status) {
+        console.log(status);
+        console.log(results);
+        $('#address').text(results[0].formatted_address)
       
-      var API_URL = 'https://api.cityofnewyork.us/geoclient/v1/address.json';
-      $.ajax(API_URL,{
-        dataType:'jsonp',
-        data: { houseNumber : results[0].address_components[0].long_name,
-               street : results[0].address_components[1].long_name,
-               zip: results[0].address_components[8].long_name,
-               app_id: '9531fd3e',
-               app_key: 'cd92412bac1c876fdafafe3b876a1228'
-              }
-      }
+      
+        var API_URL = 'https://api.cityofnewyork.us/geoclient/v1/address.json';
+        $.ajax(
+          API_URL,
+          {
+            dataType:'jsonp',
+            data: {
+              houseNumber : results[0].address_components[0].long_name,
+              street : results[0].address_components[1].long_name,
+              zip: results[0].address_components[8].long_name,
+              app_id: '9531fd3e',
+              app_key: 'cd92412bac1c876fdafafe3b876a1228'
+            }
+          }
         ).done(function(data){
           console.log(data);
           $('#precinct').text('@NYPD' + Number(data.address.policePrecinct) + 'Pct');
         })
-    });
+      }
+      });
+    }
   });
   reader.readAsArrayBuffer(e.target.files[0]);
 });
