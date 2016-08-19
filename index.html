@@ -53,16 +53,17 @@ $('#file').on('change', function(e){
               app_key: 'cd92412bac1c876fdafafe3b876a1228'
             }
           }
-        ).done(function(data){
-          console.log(data);
-          $('#precinct').text('@NYPD' + Number(data.address.policePrecinct) + 'Pct');
-        })
-      }
+        ).done(onGeoclientData)
       });
     }
   });
   reader.readAsArrayBuffer(e.target.files[0]);
 });
+
+var onGeoclientData = function(data){
+  console.log(data);
+  $('#precinct').text('@NYPD' + Number(data.address.policePrecinct) + 'Pct');
+}
 
 var geocoder = new google.maps.Geocoder;
 
