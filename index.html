@@ -32,7 +32,7 @@ $('#file').on('change', function(e){
     if(exif.tags.ModifyDate){
       $('#time').text(modifyDate(exif.tags.ModifyDate));
     }
-    if( exif.tags.GPSLatitude && lng: exif.tags.GPSLongitude){
+    if( exif.tags.GPSLatitude && exif.tags.GPSLongitude){
       var latlng = {lat: exif.tags.GPSLatitude, lng: exif.tags.GPSLongitude};
       geocoder.geocode({'location': latlng}, function(results, status) {
         console.log(status);
