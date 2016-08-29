@@ -37,7 +37,7 @@ $('#file').on('change', function(e){
       geocoder.geocode({'location': latlng}, function(results, status) {
         console.log(status);
         console.log(results);
-        var addrObj = results[0].address_components.reduce(function(obj, item){  obj[item.types[0]] = item.short_name;},{})
+        var addrObj = results[0].address_components.reduce(function(obj, item){  obj[item.types[0]] = item.short_name; return obj;},{})
         $('#address').text(results[0].formatted_address)
       
       
