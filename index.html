@@ -37,6 +37,7 @@ $('#file').on('change', function(e){
       geocoder.geocode({'location': latlng}, function(results, status) {
         console.log(status);
         console.log(results);
+        var addrObj = results[0].address_components.reduce(function(obj, item){  obj[item.types[0]] = item.short_name;},{})
         $('#address').text(results[0].formatted_address)
       
       
@@ -46,9 +47,9 @@ $('#file').on('change', function(e){
           {
             dataType:'jsonp',
             data: {
-              houseNumber : results[0].address_components[0].long_name,
-              street : results[0].address_components[1].long_name,
-              zip: results[0].address_components[results[0].address_components.length - 2].long_name,
+              houseNumber : addrObj.street_number,
+              street : addrObj.route,
+              zip: addrObj.postal_code,
               app_id: '9531fd3e',
               app_key: 'cd92412bac1c876fdafafe3b876a1228'
             }
