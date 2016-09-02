@@ -69,6 +69,7 @@ var onGeoclientData = function(data){
 var geocoder = new google.maps.Geocoder;
 
 var modifyDate = function(dateAsStr){
+  console.log('dateAsStr', dateAsStr );
   var [ imgDate, imgTime] = dateAsStr.split(" ")
   var [ imgYear, imgMonth, imgDay ] = imgDate.split(":");
   var [ imgHour, imgMinute, imgSecond ] = imgTime.split(":");
