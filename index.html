@@ -73,7 +73,7 @@ var modifyDate = function(dateAsStr){
   var [ imgDate, imgTime] = dateAsStr.split(" ")
   var [ imgYear, imgMonth, imgDay ] = imgDate.split(":");
   var [ imgHour, imgMinute, imgSecond ] = imgTime.split(":");
-  return dateFormat(new Date(imgYear, imgMonth - 1, imgDay, imgHour, imgMinute, imgSecond), "mm/dd/yyyy hh:mm:ss TT" )
+  return dateFormat(new Date(imgYear, imgMonth - 1, imgDay, imgHour, imgMinute, imgSecond), "mm/dd/yyyy hh:MM:ss TT" )
 }
 </script>
 </body>
